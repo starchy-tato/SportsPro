@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SportsPro</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-standstone.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary ps-3">
+            <a class="navbar-brand" href="/">SportsPro</a>
+            <button class="navbar-toggler" type="button"
+                    data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <nav class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav me-auto">
+                    <a class="nav-item nav-link active" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-item nav-link active" asp-controller="Products" asp-action="Index">Products</a>
+                    <a class="nav-item nav-link active" asp-controller="Technicians" asp-action="Index">Technicians</a>
+                    <a class="nav-item nav-link active" asp-controller="Customers" asp-action="Index">Customers</a>
+                    <a class="nav-item nav-link active" asp-controller="Incidents" asp-action="Index">Incidents</a>
+                    @*<a class="nav-item nav-link active" asp-controller="Registration" asp-action="GetCustomer">Registrations</a>*@
+                </div>
+                <div class="navbar-nav navbar-right">
+                    <a class="nav-item nav-link active pe-3" asp-controller="Home" asp-action="About">About</a>
+                </div>
+            </nav>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-5">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">&copy; @DateTime.Now.Year - SportsPro</div>
+    </footer>
+</body>
+</html>
