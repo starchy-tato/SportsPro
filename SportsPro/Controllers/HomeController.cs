@@ -12,12 +12,13 @@ namespace SportsPro.Controllers
             context = ctx;
         }
 
-
+        [Route("/")]
         public IActionResult Index()
         {
             return View(); // Views/Home/Index.cshtml
         }
 
+        [Route("About")]
         public IActionResult About()
         {
             return View();
