@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string controller =
+        ViewContext.RouteData.Values["controller"].ToString();
+    string action =
+        ViewContext.RouteData.Values["action"].ToString();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,8 +17,8 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @*<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>*@
 </head>
 <body>
     <header>
@@ -25,15 +32,28 @@
             </button>
             <nav class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-item nav-link active" asp-controller="Home" asp-action="Index">Home</a>
-                    <a class="nav-item nav-link active" asp-controller="Products" asp-action="Index">Products</a>
-                    <a class="nav-item nav-link active" asp-controller="Technicians" asp-action="Index">Technicians</a>
-                    <a class="nav-item nav-link active" asp-controller="Customers" asp-action="Index">Customers</a>
-                    <a class="nav-item nav-link active" asp-controller="Incidents" asp-action="Index">Incidents</a>
+                    <a class="nav-item nav-link
+                       @(controller == "Home" && action == "Index" ? "active" : "")"
+                       asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-item nav-link
+                        @(controller == "Products" ? "active" : "")"
+                       asp-controller="Products" asp-action="Index">Products</a>
+                    <a class="nav-item nav-link
+                       @(controller == "Technicians" ? "active" : "")"
+                       asp-controller="Technicians" asp-action="Index">Technicians</a>
+                    <a class="nav-item nav-link
+                       @(controller == "Customers" ? "active" : "")"
+                       asp-controller="Customers" asp-action="Index">Customers</a>
+                    <a class="nav-item nav-link
+                       @(controller == "Incidents" ? "active" : "")"
+                       asp-controller="Incidents" asp-action="Index">Incidents</a>
+
                     @*<a class="nav-item nav-link active" asp-controller="Registration" asp-action="GetCustomer">Registrations</a>*@
                 </div>
                 <div class="navbar-nav navbar-right">
-                    <a class="nav-item nav-link active pe-3" asp-controller="Home" asp-action="About">About</a>
+                    <a class="nav-item nav-link pe-3
+                       @(controller == "Home" ? "active" : "")"
+                       asp-controller="Home" asp-action="About">About</a>
                 </div>
             </nav>
         </nav>
@@ -47,5 +67,8 @@
     <footer class="border-top footer text-muted">
         <div class="container">&copy; @DateTime.Now.Year - SportsPro</div>
     </footer>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

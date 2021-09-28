@@ -46,6 +46,13 @@
                 <label asp-for="CountryID" class="control-label">Country</label>
                 <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryID"></select>
                 @*<span asp-validation-for="CountryID" class="text-danger"></span>*@
+                @*<select asp-for="CountryID" class="form-control">
+                    <option value="">Select Country</option>
+                    @foreach (Country c in ViewBag.Country)
+                    {
+                        <option value="@c.CountryID">@c.Name</option>
+                    }
+                </select>*@
             </div>
             <div class="form-group pb-3">
                 <label asp-for="Phone" class="control-label"></label>
@@ -67,6 +74,9 @@
 </div>
 
 @*<div>
-    <a asp-action="Index">Back to List</a>
-</div>*@
+        <a asp-action="Index">Back to List</a>
+    </div>*@
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
