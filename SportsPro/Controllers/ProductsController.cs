@@ -25,9 +25,20 @@ namespace SportsPro.Controllers
         {
             SportsProContext db = new SportsProContext();
             List<Product> products = db.Products.ToList();
-            
+
+            //List<Product> products = null;
+            try
+            {
+                if (TempData["Message"] == null) TempData["Message"] = "";
+            }
+            catch (Exception)
+            {
+                TempData["Message"] = "Database connection error. Try again later";
+            }
             return View(products);
         }
+
+
 
         // GET: Products/Details/5
         public IActionResult Details(int? id)

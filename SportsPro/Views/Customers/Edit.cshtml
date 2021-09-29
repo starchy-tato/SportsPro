@@ -44,14 +44,23 @@
             </div>
             <div class="form-group pb-3">
                 <label asp-for="CountryID" class="control-label">Country</label>
-                <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryID"></select>
+                @*<select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryID"></select>*@
                 @*<span asp-validation-for="CountryID" class="text-danger"></span>*@
-                @*<select asp-for="CountryID" class="form-control">
-                    <option value="">Select Country</option>
-                    @foreach (Country c in ViewBag.Country)
+
+                <select asp-for="Country" class="form-control">
+                    <option value="">Select a Country</option>
+                    @foreach (Country c in ViewBag.Countries)
                     {
                         <option value="@c.CountryID">@c.Name</option>
                     }
+                </select>
+
+                @*<select asp-for="CountryID"
+                        asp-items="@(new SelectList(ViewBag.Countries,
+                         "CountryID", "Name",
+                         Model.CountryID.ToString()))"
+                        class="form-control">
+                    <option value="value">Select Country</option>
                 </select>*@
             </div>
             <div class="form-group pb-3">
@@ -66,7 +75,7 @@
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" /> |
+                <input type="submit" value="Save" class="btn btn-outline-success"  /> |
                 <a asp-action="Index">Back to List</a>
             </div>
         </form>

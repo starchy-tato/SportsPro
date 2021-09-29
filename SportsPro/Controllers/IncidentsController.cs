@@ -54,10 +54,11 @@ namespace SportsPro.Controllers
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name");
             ViewData["TechnicianID"] = new SelectList(_context.Technicians, "TechnicianID", "Name");
 
-            
-
             //shows create title in razor page
             ViewBag.Action = "Create";
+            ViewBag.Customers = _context.Customers;
+            ViewBag.Products = _context.Products;
+            ViewBag.Technicians = _context.Technicians;
 
             //merging the create and edit razor pages
             return View("Edit", new Incident());
@@ -99,6 +100,9 @@ namespace SportsPro.Controllers
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name", incident.ProductID);
             ViewData["TechnicianID"] = new SelectList(_context.Technicians, "TechnicianID", "Name", incident.TechnicianID);
             ViewBag.Action = "Edit";
+            ViewBag.Customers = _context.Customers;
+            ViewBag.Products = _context.Products;
+            ViewBag.Technicians = _context.Technicians;
             return View(incident);
         }
 

@@ -49,6 +49,7 @@ namespace SportsPro.Controllers
         {
             //shows create title in razor page
             ViewBag.Action = "Create";
+            ViewBag.Countries = _context.Countries;
 
             ViewData["CountryID"] = new SelectList(_context.Countries, "CountryID", "Name");
             return View("Edit", new Customer());
@@ -80,6 +81,7 @@ namespace SportsPro.Controllers
             }
 
             ViewBag.Action = "Edit";
+            ViewBag.Countries = _context.Countries;
 
             var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
@@ -160,5 +162,14 @@ namespace SportsPro.Controllers
         {
             return _context.Customers.Any(e => e.CustomerID == id);
         }
-    }
-}
+
+        public IActionResult Update(int id)
+        {
+            ViewBag.Countries = _context.Countries.ToList();
+            Customer customer = _context.Customers.Find(id);
+            return View(customer);
+        }
+
+
+    }//end
+}//end
