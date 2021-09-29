@@ -49,11 +49,13 @@ namespace SportsPro
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
+            app.UseRouting(); //mark where routing decisions are made
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            //config middleware that runs after routing decisions have been made
+
+            app.UseEndpoints(endpoints => //map the end points
             {
                 endpoints.MapControllerRoute(
                     name: "default",
