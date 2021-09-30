@@ -121,8 +121,18 @@ namespace SportsPro.Controllers
             {
                 try
                 {
-                    db.Update(product);
-                     db.SaveChanges();
+                    if (product.ProductID == 0) //create
+                    {
+                        ProductManager.AddProduct(product);
+                        TempData["Message"] = $"Successfully added product {product.Name}";
+
+                    }
+                    else //edit
+                    {
+                        ProductManager.UpdateProduct(product);
+                        TempData["Message"] = $"Successfully updated product {product.Name}";
+                    }
+                    return RedirectToAction(nameof(Index)); //if successful, display list, including the change
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -134,10 +144,15 @@ namespace SportsPro.Controllers
                     {
                         throw;
                     }
+                    
                 }
-                return RedirectToAction(nameof(Index));
+
             }
-            return View(product);
+            else
+            {
+                return View(); //stays on the same page
+            }
+            
         }
 
         // GET: Products/Delete/5
@@ -162,13 +177,28 @@ namespace SportsPro.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id, Product product)
         {
             SportsProContext db = new SportsProContext();
-            Product product =  db.Products.Find(id);
-            db.Products.Remove(product);
-             db.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                Product oldProd = db.Products.Find(id);
+                string name = oldProd.Name;
+                ProductManager.DeleteProduct(id, product);
+
+                if (oldProd != null)
+                    TempData["Message"] = $"Successfully deleted product {oldProd.Name}";
+                else
+                    TempData["Message"] = $"Tried to delete a product that does not exist";
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch 
+            {
+                return View(); //stays on the same page
+
+            }
+            
         }
 
         private bool ProductExists(int id)
