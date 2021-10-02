@@ -29,3 +29,19 @@ body {
   white-space: nowrap;
   line-height: 40px; /* Vertically center the text there */
 }
+
+/* Form validation styles
+-------------------------------------------------- */
+
+.input-validation-error {
+    border: 2px solid #dc3545; /* same red as text-danger */
+    background-color: #faebd7; /* antique white */
+}
+
+.validation-summary-valid {
+    display: none;
+}
+ 
+.validation-summary-errors ul {
+    list-style: none;
+}

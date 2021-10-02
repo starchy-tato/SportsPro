@@ -62,12 +62,27 @@ namespace SportsPro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CustomerID,FirstName,LastName,Address,City,State,PostalCode,CountryID,Phone,Email")] Customer customer)
         {
+            //to validate email uniqueness
+            //if (TempData["okEmail"] == null)
+            //{
+            //    string msg = Check.EmailExists(_context, customer.Email);
+            //    if (!String.IsNullOrEmpty(msg))
+            //    {
+            //        ModelState.AddModelError(nameof(Customer.Email), msg);
+            //    }
+            //}
+
             if (ModelState.IsValid)
             {
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            else
+            {
+                return View(customer);
+            }
+
             ViewData["CountryID"] = new SelectList(_context.Countries, "CountryID", "Name", customer.CountryID);
             return View(customer);
         }
@@ -81,7 +96,7 @@ namespace SportsPro.Controllers
             }
 
             ViewBag.Action = "Edit";
-            ViewBag.Countries = _context.Countries;
+            ViewBag.Countries = _context.Countries.ToList();
 
             var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
@@ -99,6 +114,15 @@ namespace SportsPro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerID,FirstName,LastName,Address,City,State,PostalCode,CountryID,Phone,Email")] Customer customer)
         {
+            //if (TempData["okEmail"] == null)
+            //{
+            //    string msg = Check.EmailExists(_context, customer.Email);
+            //    if (!String.IsNullOrEmpty(msg))
+            //    {
+            //        ModelState.AddModelError(nameof(Customer.Email), msg);
+            //    }
+            //}
+
             if (id != customer.CustomerID)
             {
                 return NotFound();

@@ -13,7 +13,6 @@ namespace SportsPro.Controllers
     {
         public SportsProContext context { get; set; }
 
-    
 
         public ProductsController()
         {
