@@ -10,11 +10,16 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="All" class="text-danger"></div>
+            @*invalid data css styling*@
+            <div asp-validation-summary="All" class="text-danger validation-summary-valid"
+                 data-valmsg-summary="true"></div>
+            <ul>
+                <li style="display: none"></li>
+            </ul>
             <input type="hidden" asp-for="CustomerID" />
-            <div class="form-group pb-3">
+            <div class="form-group pb-3" >
                 <label asp-for="FirstName" class="control-label">First Name</label>
-                <input asp-for="FirstName" class="form-control" />
+                <input asp-for="FirstName" class="form-control" name="FirstName"/>
                 @*<span asp-validation-for="FirstName" class="text-danger"></span>*@
             </div>
             <div class="form-group pb-3">
@@ -32,7 +37,7 @@
                 <input asp-for="City" class="form-control" />
                 @*<span asp-validation-for="City" class="text-danger"></span>*@
             </div>
-            <div class="form-grou pb-3p">
+            <div class="form-group pb-3p">
                 <label asp-for="State" class="control-label"></label>
                 <input asp-for="State" class="form-control" />
                 @*<span asp-validation-for="State" class="text-danger"></span>*@
@@ -44,22 +49,17 @@
             </div>
             <div class="form-group pb-3">
                 <label asp-for="CountryID" class="control-label">Country</label>
-                @*<select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryID"></select>*@
-                @*<span asp-validation-for="CountryID" class="text-danger"></span>*@
-
-                <select asp-for="Country" class="form-control">
+                <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryID">
                     <option value="">Select a Country</option>
                     @foreach (Country c in ViewBag.Countries)
                     {
                         <option value="@c.CountryID">@c.Name</option>
                     }
                 </select>
+                @*<span asp-validation-for="CountryID" class="text-danger"></span>*@
 
-                @*<select asp-for="CountryID"
-                        asp-items="@(new SelectList(ViewBag.Countries,
-                         "CountryID", "Name",
-                         Model.CountryID.ToString()))"
-                        class="form-control">
+                @*<select asp-for="CountryID" class="form-control" asp-items="@(new SelectList(ViewBag.Countries,
+                 "CountryID", "Name", Model.CountryID.ToString()))">
                     <option value="value">Select Country</option>
                 </select>*@
             </div>

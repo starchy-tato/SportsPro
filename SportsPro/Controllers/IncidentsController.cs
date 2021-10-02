@@ -13,16 +13,33 @@ namespace SportsPro.Controllers
     {
         private readonly SportsProContext _context;
 
+
         public IncidentsController(SportsProContext context)
         {
             _context = context;
         }
 
+
+
+
         // GET: Incidents
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var sportsProContext = _context.Incidents.Include(i => i.Customer).Include(i => i.Product).Include(i => i.Technician);
-            return View(await sportsProContext.ToListAsync());
+            List<Incident> incidents = IncidentsManager.GetAll();
+            List<IncidentVM> viewModels = incidents.Select(i => new IncidentVM
+            {
+                //the read only presentation from the incident view model file
+                Title = i.Title,
+                FullName = i.Customer.FullName,
+                Name = i.Product.Name,
+                DateOpened = i.DateOpened
+
+            }).ToList();
+            return View(viewModels);
+
+            //var sportsProContext = _context.Incidents.Include(i => i.Customer).Include(i => i.Product).Include(i => i.Technician);
+            //return View(await sportsProContext.ToListAsync());
+
         }
 
         // GET: Incidents/Details/5
@@ -33,22 +50,40 @@ namespace SportsPro.Controllers
                 return NotFound();
             }
 
-            var incident = await _context.Incidents
-                .Include(i => i.Customer)
-                .Include(i => i.Product)
-                .Include(i => i.Technician)
-                .FirstOrDefaultAsync(m => m.IncidentID == id);
-            if (incident == null)
+            //var incident = await _context.Incidents
+            //.Include(i => i.Customer)
+            //.Include(i => i.Product)
+            //.Include(i => i.Technician)
+            //.FirstOrDefaultAsync(m => m.IncidentID == id);
+
+            List<Incident> incidents = IncidentsManager.GetAll();
+            List<IncidentVM> viewModels = incidents.Select(i => new IncidentVM
+            {
+                //the read only presentation from the incident view model file
+                FullName = i.Customer.FullName,
+                Name = i.Product.Name,
+                Title = i.Title,
+                Description = i.Description,
+                Technician = i.Technician,
+                DateOpened = i.DateOpened,
+                DateClosed = i.DateClosed
+
+            }).ToList();
+            if (viewModels == null)
             {
                 return NotFound();
             }
 
-            return View(incident);
+            return View(viewModels);
         }
 
         // GET: Incidents/Create
         public IActionResult Create()
         {
+            IncidentVM incidentVM = new IncidentVM()
+            {
+
+            };
 
             ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "FullName");
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name");
@@ -56,12 +91,13 @@ namespace SportsPro.Controllers
 
             //shows create title in razor page
             ViewBag.Action = "Create";
+
             ViewBag.Customers = _context.Customers;
             ViewBag.Products = _context.Products;
             ViewBag.Technicians = _context.Technicians;
 
             //merging the create and edit razor pages
-            return View("Edit", new Incident());
+            return View("Edit", new IncidentVM());
         }
 
         // POST: Incidents/Create
