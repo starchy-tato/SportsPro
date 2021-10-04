@@ -62,15 +62,15 @@ namespace SportsPro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CustomerID,FirstName,LastName,Address,City,State,PostalCode,CountryID,Phone,Email")] Customer customer)
         {
-            //to validate email uniqueness
-            //if (TempData["okEmail"] == null)
-            //{
-            //    string msg = Check.EmailExists(_context, customer.Email);
-            //    if (!String.IsNullOrEmpty(msg))
-            //    {
-            //        ModelState.AddModelError(nameof(Customer.Email), msg);
-            //    }
-            //}
+            //to validate that emails aren't duplicated
+            if (TempData["okEmail"] == null)
+            {
+                string msg = Check.EmailExists(_context, customer.Email);
+                if (!String.IsNullOrEmpty(msg))
+                {
+                    ModelState.AddModelError(nameof(Customer.Email), msg);
+                }
+            }
 
             if (ModelState.IsValid)
             {
@@ -114,14 +114,14 @@ namespace SportsPro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerID,FirstName,LastName,Address,City,State,PostalCode,CountryID,Phone,Email")] Customer customer)
         {
-            //if (TempData["okEmail"] == null)
-            //{
-            //    string msg = Check.EmailExists(_context, customer.Email);
-            //    if (!String.IsNullOrEmpty(msg))
-            //    {
-            //        ModelState.AddModelError(nameof(Customer.Email), msg);
-            //    }
-            //}
+            if (TempData["okEmail"] == null)
+            {
+                string msg = Check.EmailExists(_context, customer.Email);
+                if (!String.IsNullOrEmpty(msg))
+                {
+                    ModelState.AddModelError(nameof(Customer.Email), msg);
+                }
+            }
 
             if (id != customer.CustomerID)
             {

@@ -36,7 +36,7 @@ namespace SportsPro.Models
 
 		public string CountryID { get; set; }
 
-		//[Required(ErrorMessage = "Please enter a country")]
+		[Required(ErrorMessage = "Please select a country")]
 		public Country Country { get; set; }
 
 		[Required(ErrorMessage = "Please enter a phone number.")]
